@@ -23,7 +23,7 @@ if [ ! -f "${IMAGE_DIR}/${IMAGE_NAME}" ]; then
     if [ ! -f "${IMAGE_DIR}/${IMAGE_ARCHIVE_NAME}" ]; then
         log_info "Downloading ${IMAGE_URL} to ${IMAGE_DIR}"
         mkdir -p "${IMAGE_DIR}"
-        wget "${IMAGE_URL}" -O "${IMAGE_DIR}/${IMAGE_ARCHIVE_NAME}"
+        wget "${IMAGE_URL}" --progress=dot:giga -O "${IMAGE_DIR}/${IMAGE_ARCHIVE_NAME}"
     fi
     log_info "Unxzing ${IMAGE_ARCHIVE_NAME}"
     unxz -v "${IMAGE_DIR}/${IMAGE_ARCHIVE_NAME}"
