@@ -35,7 +35,7 @@ resize_img()
 
     log_info "Running e2fsck on partition #2"
 
-    e2fsck -f "${lodevice}p2"
+    e2fsck -p -y -f "${lodevice}p2"
 
     log_info "Extending partition #2"
 
