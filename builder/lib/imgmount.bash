@@ -39,6 +39,8 @@ mount_image() {
     mount -o bind /dev/pts "${mountroot}/dev/pts"
     mount -o bind /run "${mountroot}/run"
 
+    mv "${mountroot}/etc/resolv.conf" "${mountroot}/etc/resolv.conf.bak"
+
     cp -L /etc/resolv.conf "${mountroot}/etc/resolv.conf" || true
 
     echo "${img_device}"
@@ -69,6 +71,11 @@ umount_image() {
         log_err "Mount point ${mountroot} does not exist or is not a directory"
         return 1
     fi
+
+    log_info "Restoring original resolv.conf"
+
+    rm -f "${mountroot}/etc/resolv.conf"
+    mv "${mountroot}/etc/resolv.conf.bak" "${mountroot}/etc/resolv.conf"
 
     log_info "Unmounting ${mountroot} and removing backing device ${lodevice}"
 

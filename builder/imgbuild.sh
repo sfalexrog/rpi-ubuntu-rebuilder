@@ -10,10 +10,12 @@ source "${SCRIPT_DIR}/lib/imgmount.bash"
 source "${SCRIPT_DIR}/lib/logging.bash"
 # shellcheck source=lib/imgresize.bash
 source "${SCRIPT_DIR}/lib/imgresize.bash"
+# shellcheck source=lib/chroot.bash
+source "${SCRIPT_DIR}/lib/chroot.bash"
 
 
 IMAGE_URL="https://cdimage.ubuntu.com/releases/20.04.2/release/ubuntu-20.04.2-preinstalled-server-arm64+raspi.img.xz"
-IMAGE_DIR="$(realpath "${SCRIPT_DIR}")/images"
+IMAGE_DIR="$(realpath "${SCRIPT_DIR}/../images")"
 IMAGE_ARCHIVE_NAME="$(basename ${IMAGE_URL})"
 IMAGE_NAME="$(basename ${IMAGE_ARCHIVE_NAME} .xz)"
 
@@ -40,6 +42,10 @@ lodevice="$(mount_image "${IMAGE_DIR}/${IMAGE_NAME}" "${MOUNTPOINT}")"
 log_info "Running in chroot"
 
 chroot "${MOUNTPOINT}" uname -a
+chroot_script "${MOUNTPOINT}" "$(realpath "${SCRIPT_DIR}")/internal_install_ros.sh"
+
+log_info "Trimming filesystem"
+fstrim "${MOUNTPOINT}"
 
 log_info "Unmounting chroot"
 

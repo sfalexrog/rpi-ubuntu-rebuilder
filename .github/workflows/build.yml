@@ -13,6 +13,10 @@ jobs:
       - name: Set up additional packages
         run: |
           sudo apt update
-          sudo apt install -y ca-certificates parted wget xz-utils
+          sudo apt install -y ca-certificates parted wget xz-utils zip
       - name: Run builder
-        run: sudo ./builder/base_test.sh
+        run: sudo ./builder/imgbuild.sh
+      - name: Compress the image
+        run: |
+          sudo chmod a+rw ./images/*
+          cd ./images && zip ./ubuntu-20.04.2-preinstalled-server-arm64+raspi.img.zip ./ubuntu-20.04.2-preinstalled-server-arm64+raspi.img
