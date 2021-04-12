@@ -18,5 +18,5 @@ jobs:
         run: sudo ./builder/imgbuild.sh
       - name: Compress the image
         run: |
-          sudo chmod a+rw ./images/*
+          sudo chmod a+rw ./images
           cd ./images && zip ./ubuntu-20.04.2-preinstalled-server-arm64+raspi.img.zip ./ubuntu-20.04.2-preinstalled-server-arm64+raspi.img
