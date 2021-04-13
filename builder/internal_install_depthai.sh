@@ -54,11 +54,8 @@ readonly ubuntu_arm_pkgs=(
     "${ubuntu_pkgs[@]}"
     # https://stackoverflow.com/a/53402396/5494277
     libhdf5-dev
-    libhdf5-dev
+    libhdf5-serial-dev
     libatlas-base-dev
-    libjasper-dev
-    libqtgui4
-    libqt4-test
     # https://github.com/EdjeElectronics/TensorFlow-Object-Detection-on-the-Raspberry-Pi/issues/18#issuecomment-433953426
     libilmbase-dev
     libopenexr-dev
