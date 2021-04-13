@@ -41,7 +41,7 @@ lodevice="$(mount_image "${IMAGE_DIR}/${IMAGE_NAME}" "${MOUNTPOINT}")"
 
 log_info "Running in chroot"
 
-chroot "${MOUNTPOINT}" uname -a
+chroot_script "${MOUNTPOINT}" "$(realpath "${SCRIPT_DIR}")/internal_install_depthai.sh"
 chroot_script "${MOUNTPOINT}" "$(realpath "${SCRIPT_DIR}")/internal_install_ros.sh"
 
 log_info "Trimming filesystem"
