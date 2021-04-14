@@ -37,7 +37,7 @@ chroot_script()
 
     log_info "Preventing services from starting up"
 
-    printf "#!/bin/sh\nexit101" > "${mountpoint}/usr/sbin/policy-rc.d"
+    printf "#!/bin/sh\nexit 101" > "${mountpoint}/usr/sbin/policy-rc.d"
     chmod a+x "${mountpoint}/usr/sbin/policy-rc.d"
 
     log_info "Running ${script} in ${mountpoint}"
