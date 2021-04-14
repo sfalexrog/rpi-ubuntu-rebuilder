@@ -36,10 +36,8 @@ chroot_script()
     cp "$(dirname "${BASH_SOURCE[0]}")"/*.bash "${script_tmpdir}/lib"
 
     log_info "Preventing services from starting up"
-    cat <<< EOF > "${mountpoint}/usr/sbin/policy-rc.d"
-#!/bin/sh
-exit 101
-    EOF
+
+    printf "#!/bin/sh\nexit101" > "${mountpoint}/usr/sbin/policy-rc.d"
     chmod a+x "${mountpoint}/usr/sbin/policy-rc.d"
 
     log_info "Running ${script} in ${mountpoint}"
