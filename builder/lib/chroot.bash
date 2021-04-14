@@ -25,7 +25,8 @@ chroot_script()
     shift 2
 
     local script_tmpdir="${mountpoint}/tmp_script"
-    local script_name="$(basename "${script}")"
+    local script_name
+    script_name="$(basename "${script}")"
 
     log_info "Copying ${script} to ${script_tmpdir}"
 
@@ -34,10 +35,18 @@ chroot_script()
     cp "${script}" "${script_tmpdir}"
     cp "$(dirname "${BASH_SOURCE[0]}")"/*.bash "${script_tmpdir}/lib"
 
+    log_info "Preventing services from starting up"
+    cat <<< EOF > "${mountpoint}/usr/sbin/policy-rc.d"
+#!/bin/sh
+exit 101
+    EOF
+    chmod a+x "${mountpoint}/usr/sbin/policy-rc.d"
+
     log_info "Running ${script} in ${mountpoint}"
     chmod a+x "${script_tmpdir}/${script_name}"
     chroot "${mountpoint}" /bin/bash -c "/tmp_script/${script_name} $*"
 
     log_info "Cleaning up"
     rm -rf "${script_tmpdir}"
+    rm -f "${mountpoint}/usr/sbin/policy-rc.d"
 }
