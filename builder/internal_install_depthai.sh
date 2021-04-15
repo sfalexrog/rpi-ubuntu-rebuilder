@@ -20,7 +20,9 @@ source "${SCRIPT_DIR}/lib/logging.bash"
 readonly linux_pkgs=(
     python3
     python3-pip
-    udev
+# FIXME: "installing" (updating) udev seems to trigger update-initramfs,
+# which fails in our chroot.
+#    udev
     cmake
     git
     python3-numpy
